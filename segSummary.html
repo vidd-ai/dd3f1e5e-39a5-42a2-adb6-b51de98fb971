@@ -115,6 +115,12 @@ d3.json(fn, function(error, json) {
   update();
 });
 
+function resize() {
+    width = window.innerWidth, height = window.innerHeight;
+    svg.attr("width", width).attr("height", height);
+    force.size([width, height]).resume();
+}
+
 function update() {
   var nodes = flatten(root),
       links = d3.layout.tree().links(nodes);
@@ -153,6 +159,8 @@ function update() {
   node.select("circle")
       .style("fill", color);
 
+  resize();
+  d3.select(window).on("resize", resize);
 }
 
 function tick() {
